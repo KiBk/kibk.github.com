@@ -1,6 +1,6 @@
 # Project summary
-- Static personal portfolio for Kirill Bykov forked from Ryan Fitzgerald's devportfolio template; single-page layout (`index.html`) with sections for About, Experience, Education, Projects, Skills, Languages/Personal Achievements, and a Formspree-backed contact form. Content and grammar cleaned up; HTML semantics improved (valid tags, alt text, fixed list structure).
-- Frontend stack: Bootstrap grid, Font Awesome icons, Google Fonts (Lato), compiled CSS in `css/styles.css` from `scss/`, and minified JS in `js/scripts.min.js` sourced from `js/scripts.js`; images live under `images/`.
+- Static personal portfolio for Kirill Bykov forked from Ryan Fitzgerald's devportfolio template; still a single-page site (`index.html`), but now with a responsive split hero, an always-open client-side portfolio terminal, richer project cards with expandable details, and sections for About, Experience, Education, Projects, Skills, Languages/Personal Achievements, and a Formspree-backed contact form.
+- Frontend stack: Bootstrap grid for legacy structure, Font Awesome icons, Google Fonts (IBM Plex Sans and IBM Plex Mono), stylesheet source in `scss/styles.scss` mirrored to `css/styles.css`, and runtime JavaScript in `js/scripts.min.js` authored alongside `js/scripts.js`; images live under `images/`.
 - Upstream reference: https://github.com/RyanFitzgerald/devportfolio
 
 # Maintenance
