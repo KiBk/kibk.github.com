@@ -34,10 +34,11 @@
         about: [
             'Embedded and infrastructure engineer based in Trondheim.',
             'Worked across RTL design, verification, DevOps, and developer enablement.',
-            'I like systems that stay understandable when they grow.'
+            'Now focused on AI-assisted engineering workflows for hardware design.'
         ],
         experience: [
-            'Arm: Senior Engineer using Generative AI to improve hardware design efficiency.',
+            'Arm: promoted to Staff Engineer in April 2026 after serving as Senior Engineer.',
+            'Current focus: using AI to make hardware design work simpler.',
             'Nordic Semiconductor: moved from digital design and verification into DevOps and design enablement.',
             'The through-line is developer productivity for hardware teams.'
         ],
@@ -67,7 +68,7 @@
         whoami: [
             'Kirill Bykov',
             'Hardware / Software Engineer',
-            'Typing into a fake terminal on a static site hosted on GitHub Pages.'
+            'Focused on AI-assisted engineering workflows, embedded systems, and developer tooling.'
         ],
         hire: [
             'Easter egg unlocked.',
