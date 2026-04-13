@@ -92,8 +92,9 @@
     var $terminalOutput = $('#terminal-output');
     var $terminalForm = $('#terminal-form');
     var $terminalInput = $('#terminal-input');
-    var $terminalDockToggle = $('#terminal-dock-toggle');
-    var $terminalReturnHome = $('#terminal-return-home');
+    var $terminalCloseToggle = $('#terminal-close-toggle');
+    var $terminalMinToggle = $('#terminal-min-toggle');
+    var $terminalOpenToggle = $('#terminal-open-toggle');
     var initialTerminalHtml = $terminalOutput.html();
     var commandHistory = [];
     var historyIndex = 0;
@@ -225,19 +226,24 @@
         return $body.hasClass('terminal-expanded');
     }
 
+    function setTerminalLightState($control, enabled, label) {
+        if (!$control.length) {
+            return;
+        }
+
+        $control.prop('disabled', !enabled);
+        $control.attr('aria-disabled', enabled ? 'false' : 'true');
+        $control.toggleClass('is-active', enabled);
+
+        if (label) {
+            $control.attr('aria-label', label);
+        }
+    }
+
     function syncTerminalDockControls() {
-        if (!$terminalDockToggle.length) {
-            return;
-        }
-
-        if (isTerminalExpanded()) {
-            $terminalDockToggle.text('Min');
-            $terminalDockToggle.attr('aria-label', 'Collapse terminal');
-            return;
-        }
-
-        $terminalDockToggle.text('Open');
-        $terminalDockToggle.attr('aria-label', 'Expand terminal');
+        setTerminalLightState($terminalCloseToggle, isTerminalDocked(), 'Return terminal to intro');
+        setTerminalLightState($terminalMinToggle, isTerminalDocked() && isTerminalExpanded(), 'Minimize terminal');
+        setTerminalLightState($terminalOpenToggle, isTerminalDocked() && !isTerminalExpanded(), 'Open terminal');
     }
 
     function syncTerminalDockLayout() {
@@ -289,8 +295,8 @@
 
         if (!dockHintShown) {
             appendTerminalResponse([
-                'Terminal docked. Select it or press <span class="terminal-highlight">Open</span> to keep typing.',
-                'Use <span class="terminal-highlight">cd home</span> or <span class="terminal-highlight">Hero</span> to bring it back to the intro.'
+                'Terminal docked. Select it or press the <span class="terminal-highlight">green</span> button to keep typing.',
+                'Use <span class="terminal-highlight">cd home</span> or the <span class="terminal-highlight">red</span> button to bring it back to the intro.'
             ], 'system');
             dockHintShown = true;
         }
@@ -577,16 +583,27 @@
         }
     });
 
-    $terminalDockToggle.on('click', function() {
-        if (isTerminalExpanded()) {
-            collapseDockedTerminal();
+    $terminalOpenToggle.on('click', function() {
+        if (!isTerminalDocked() || isTerminalExpanded()) {
             return;
         }
 
         expandDockedTerminal();
     });
 
-    $terminalReturnHome.on('click', function() {
+    $terminalMinToggle.on('click', function() {
+        if (!isTerminalExpanded()) {
+            return;
+        }
+
+        collapseDockedTerminal();
+    });
+
+    $terminalCloseToggle.on('click', function() {
+        if (!isTerminalDocked()) {
+            return;
+        }
+
         returnTerminalHome();
     });
 

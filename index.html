@@ -18,7 +18,7 @@
           rel="stylesheet">
     <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/styles.css?v=20260413d" rel="stylesheet">
+    <link href="css/styles.css?v=20260413e" rel="stylesheet">
 </head>
 
 <body>
@@ -71,22 +71,18 @@
                 <div class="lead-terminal-column">
                     <div class="terminal-window shadow-large" id="hero-terminal">
                         <div class="terminal-toolbar">
-                            <div class="terminal-lights" aria-hidden="true">
-                                <span class="terminal-light terminal-light-red"></span>
-                                <span class="terminal-light terminal-light-amber"></span>
-                                <span class="terminal-light terminal-light-green"></span>
+                            <div class="terminal-lights" aria-label="Terminal controls">
+                                <button class="terminal-light terminal-light-button terminal-light-red"
+                                        id="terminal-close-toggle" type="button"
+                                        aria-label="Return terminal to intro"></button>
+                                <button class="terminal-light terminal-light-button terminal-light-amber"
+                                        id="terminal-min-toggle" type="button"
+                                        aria-label="Minimize terminal"></button>
+                                <button class="terminal-light terminal-light-button terminal-light-green"
+                                        id="terminal-open-toggle" type="button"
+                                        aria-label="Open terminal"></button>
                             </div>
                             <span class="terminal-title">kibk.net shell</span>
-                            <div class="terminal-toolbar-actions" aria-label="Terminal controls">
-                                <button class="terminal-toolbar-button" id="terminal-dock-toggle" type="button"
-                                        aria-label="Expand terminal">
-                                    Open
-                                </button>
-                                <button class="terminal-toolbar-button terminal-toolbar-button-secondary"
-                                        id="terminal-return-home" type="button" aria-label="Return terminal to intro">
-                                    Hero
-                                </button>
-                            </div>
                         </div>
                         <div class="terminal-screen">
                             <div class="terminal-output" id="terminal-output" aria-live="polite">
@@ -655,7 +651,7 @@
     </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="js/scripts.min.js?v=20260413d"></script>
+    <script src="js/scripts.min.js?v=20260413e"></script>
 </body>
 
 </html>
