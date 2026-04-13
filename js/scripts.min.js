@@ -13,9 +13,16 @@
 (function($) {
     var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var cvUrl = 'https://drive.google.com/file/d/1VMUJ1DpWQwMqXVmJBZzRIiAu3b4kBlfH/view?usp=sharing';
+    var githubUrl = 'https://github.com/kibk';
+    var linkedinUrl = 'https://linkedin.com/in/mrkirillbykov/';
+    var secretUrl = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
     var shellHost = 'kibk.net';
     var defaultShellUser = 'user';
-    var ownerShellUser = 'kibk';
+    var ownerShellUsers = {
+        kibk: true,
+        root: true
+    };
+    var sectionOrder = ['about', 'experience', 'education', 'projects', 'skills', 'contact'];
     var sectionTargets = {
         about: '#about',
         experience: '#experience',
@@ -26,13 +33,72 @@
         home: '#lead',
         top: 'top'
     };
+    var openTargets = {
+        github: {
+            label: 'GitHub',
+            url: githubUrl
+        },
+        linkedin: {
+            label: 'LinkedIn',
+            url: linkedinUrl
+        },
+        cv: {
+            label: 'CV',
+            url: cvUrl
+        },
+        resume: {
+            label: 'CV',
+            url: cvUrl
+        },
+        secret: {
+            label: 'secret',
+            url: secretUrl,
+            ownerOnly: true
+        }
+    };
+    var terminalDocuments = {
+        about: [
+            'Started in digital design and verification before getting pulled into continuous development and tooling.',
+            'Today at Arm I work on using AI to make hardware design work simpler.',
+            'This site pulls together the hardware, infrastructure, and tooling parts of that work.'
+        ],
+        experience: [
+            'Arm: promoted to Staff Engineer in April 2026 after serving as Senior Engineer.',
+            'Nordic Semiconductor: moved from digital design and verification into DevOps and design enablement.',
+            'Most of the work has revolved around making hardware teams faster and easier to support.'
+        ],
+        education: [
+            'Master studies focused on embedded computing systems, SystemC/TLM, and verification.',
+            'Coursework spanned FPGA, digital systems, cryptography, and computer architecture.',
+            'The education section below has the structured timeline.'
+        ],
+        projects: [
+            'Homelab: self-hosted infrastructure and experiments.',
+            'Custom keyboard work: soldering and nRF52-based builds.',
+            'High-level verification environment: hybrid RTL/SystemC validation with faster iteration.'
+        ],
+        skills: [
+            'Software: C++, Python, Shell, JavaScript, Git.',
+            'Infrastructure: Docker, Terraform, Ansible, Azure, CI/CD.',
+            'Hardware: FPGA, Verilog, SystemVerilog, VHDL, SVA, SystemC.'
+        ],
+        contact: [
+            'Best route: the contact form below.',
+            'Direct links are available through <span class="terminal-highlight">open github</span>, <span class="terminal-highlight">open linkedin</span>, and <span class="terminal-highlight">open cv</span>.'
+        ],
+        secret: [
+            'Owner note unlocked.',
+            'This terminal is deliberately simple on the surface and a little deeper underneath.',
+            'If you found this, the shell is behaving exactly as intended.'
+        ]
+    };
 
     var terminalResponses = {
         help: [
             'Commands:',
             '<span class="terminal-highlight">about</span> <span class="terminal-highlight">experience</span> <span class="terminal-highlight">education</span> <span class="terminal-highlight">projects</span> <span class="terminal-highlight">skills</span> <span class="terminal-highlight">contact</span>',
-            '<span class="terminal-highlight">cd about</span> <span class="terminal-highlight">cd projects</span> <span class="terminal-highlight">cd contact</span> and <span class="terminal-highlight">cd home</span> navigate the page.',
-            '<span class="terminal-highlight">cv</span> opens the resume link. <span class="terminal-highlight">clear</span> resets the terminal.'
+            '<span class="terminal-highlight">ls</span>, <span class="terminal-highlight">pwd</span>, <span class="terminal-highlight">cd &lt;section&gt;</span>, <span class="terminal-highlight">cat &lt;section&gt;</span>, and <span class="terminal-highlight">open github</span>/<span class="terminal-highlight">open linkedin</span>/<span class="terminal-highlight">open cv</span> extend the shell.',
+            '<span class="terminal-highlight">clear</span> resets the terminal. <span class="terminal-highlight">cv</span> still prints the resume link.'
         ],
         about: [
             'Embedded and infrastructure engineer based in Trondheim.',
@@ -99,14 +165,27 @@
     var commandHistory = [];
     var historyIndex = 0;
     var currentShellUser = defaultShellUser;
+    var currentDirectory = 'home';
     var dockHintShown = false;
 
     function escapeHtml(value) {
         return $('<div>').text(value).html();
     }
 
+    function isOwnerShellUser() {
+        return !!ownerShellUsers[currentShellUser];
+    }
+
+    function getShellPathText() {
+        if (currentDirectory === 'home') {
+            return '~';
+        }
+
+        return '~/' + currentDirectory;
+    }
+
     function getShellPromptText() {
-        return currentShellUser + '@' + shellHost + ':~$';
+        return currentShellUser + '@' + shellHost + ':' + getShellPathText() + '$';
     }
 
     function getShellPromptMarkup() {
@@ -119,8 +198,192 @@
         }
     }
 
+    function setCurrentDirectory(nextDirectory) {
+        currentDirectory = nextDirectory || 'home';
+        syncTerminalPrompt();
+    }
+
+    function getLsResponse() {
+        var directories = [];
+        var links = ['cv', 'github', 'linkedin'];
+
+        if (currentDirectory !== 'home') {
+            directories.push('<span class="terminal-highlight">../</span>');
+        }
+
+        $.each(sectionOrder, function(_, entry) {
+            directories.push('<span class="terminal-highlight">' + escapeHtml(entry) + '/</span>');
+        });
+
+        if (isOwnerShellUser()) {
+            links.push('<span class="terminal-highlight">secret</span>');
+        }
+
+        return [
+            directories.join('  '),
+            links.join('  ')
+        ];
+    }
+
+    function getPwdResponse() {
+        return [getShellPathText()];
+    }
+
+    function getCommandCompletionCandidates() {
+        return [
+            'help',
+            'ls',
+            'pwd',
+            'cd',
+            'cat',
+            'open',
+            'clear',
+            'cv',
+            'whoami',
+            'coffee',
+            'about',
+            'experience',
+            'education',
+            'projects',
+            'skills',
+            'contact',
+            'su'
+        ];
+    }
+
+    function getArgumentCompletionCandidates(command) {
+        if (command === 'cd') {
+            return sectionOrder.concat(['home', '..', '~', '/']);
+        }
+
+        if (command === 'cat') {
+            var targets = sectionOrder.slice();
+
+            if (isOwnerShellUser()) {
+                targets.push('secret');
+            }
+
+            return targets;
+        }
+
+        if (command === 'open') {
+            var openEntries = ['github', 'linkedin', 'cv'];
+
+            if (isOwnerShellUser()) {
+                openEntries.push('secret');
+            }
+
+            return openEntries;
+        }
+
+        if (command === 'su') {
+            return [defaultShellUser, 'kibk', 'root'];
+        }
+
+        return [];
+    }
+
+    function getLongestCommonPrefix(options) {
+        var prefix;
+        var index = 0;
+
+        if (!options.length) {
+            return '';
+        }
+
+        prefix = options[0];
+
+        while (index < prefix.length) {
+            var character = prefix.charAt(index);
+            var matches = $.grep(options, function(option) {
+                return option.charAt(index) === character;
+            }).length === options.length;
+
+            if (!matches) {
+                break;
+            }
+
+            index += 1;
+        }
+
+        return prefix.slice(0, index);
+    }
+
+    function applyTabCompletion() {
+        var rawValue = $terminalInput.val();
+        var trimmedStart = rawValue.replace(/^\s+/, '');
+        var hasTrailingSpace = /\s$/.test(rawValue);
+        var parts = trimmedStart ? trimmedStart.split(/\s+/) : [];
+        var fragment;
+        var command;
+        var options;
+        var prefix;
+
+        if (!parts.length) {
+            return;
+        }
+
+        if (parts.length === 1 && !hasTrailingSpace) {
+            fragment = parts[0].toLowerCase();
+            options = $.grep(getCommandCompletionCandidates(), function(candidate) {
+                return candidate.indexOf(fragment) === 0;
+            });
+
+            if (!options.length) {
+                return;
+            }
+
+            prefix = getLongestCommonPrefix(options);
+
+            if (!prefix) {
+                return;
+            }
+
+            if (options.length === 1) {
+                $terminalInput.val(options[0] + ' ');
+                return;
+            }
+
+            if (prefix === fragment) {
+                return;
+            }
+
+            $terminalInput.val(prefix);
+            return;
+        }
+
+        command = terminalAliases[parts[0].toLowerCase()] || parts[0].toLowerCase();
+        fragment = hasTrailingSpace ? '' : parts[parts.length - 1].toLowerCase();
+        options = $.grep(getArgumentCompletionCandidates(command), function(candidate) {
+            return candidate.indexOf(fragment) === 0;
+        });
+
+        if (!options.length) {
+            return;
+        }
+
+        prefix = getLongestCommonPrefix(options);
+
+        if (!prefix) {
+            return;
+        }
+
+        if (hasTrailingSpace) {
+            parts.push(prefix);
+        } else {
+            parts[parts.length - 1] = prefix;
+        }
+
+        if (options.length === 1) {
+            $terminalInput.val(parts.join(' ') + ' ');
+            return;
+        }
+
+        $terminalInput.val(parts.join(' '));
+    }
+
     function getWhoAmIResponse() {
-        if (currentShellUser === ownerShellUser) {
+        if (isOwnerShellUser()) {
             return [
                 currentShellUser,
                 'Site owner session unlocked.',
@@ -309,6 +572,7 @@
     }
 
     function returnTerminalHome() {
+        setCurrentDirectory('home');
         restoreTerminalToHero();
         scrollToTarget(sectionTargets.home);
 
@@ -342,7 +606,7 @@
         currentShellUser = targetUser;
         syncTerminalPrompt();
 
-        if (currentShellUser === ownerShellUser) {
+        if (isOwnerShellUser()) {
             appendTerminalResponse([
                 'Identity switched to <span class="terminal-highlight">' + escapeHtml(currentShellUser) + '</span>.',
                 'Owner profile unlocked.'
@@ -356,9 +620,81 @@
         return true;
     }
 
+    function handleListCommand() {
+        appendTerminalResponse(getLsResponse());
+        return true;
+    }
+
+    function handlePrintWorkingDirectoryCommand() {
+        appendTerminalResponse(getPwdResponse());
+        return true;
+    }
+
+    function handleCatCommand(command) {
+        var target = $.trim(command.slice(3));
+        var documentKey = target.toLowerCase();
+
+        if (!target) {
+            appendTerminalResponse([
+                'Specify a document, for example <span class="terminal-highlight">cat about</span>.'
+            ], 'system');
+            return true;
+        }
+
+        if (documentKey === 'secret' && !isOwnerShellUser()) {
+            appendTerminalResponse([
+                'cat: <span class="terminal-highlight">' + escapeHtml(target) + '</span>: No such file.'
+            ], 'system');
+            return true;
+        }
+
+        if (terminalDocuments[documentKey]) {
+            appendTerminalResponse(terminalDocuments[documentKey]);
+            return true;
+        }
+
+        if (openTargets[documentKey]) {
+            appendTerminalResponse([
+                'Use <span class="terminal-highlight">open ' + escapeHtml(documentKey) + '</span> for that target.'
+            ], 'system');
+            return true;
+        }
+
+        appendTerminalResponse([
+            'cat: <span class="terminal-highlight">' + escapeHtml(target) + '</span>: No such file.'
+        ], 'system');
+        return true;
+    }
+
+    function handleOpenCommand(command) {
+        var target = $.trim(command.slice(4));
+        var openTarget;
+
+        if (!target) {
+            appendTerminalResponse([
+                'Specify a target, for example <span class="terminal-highlight">open github</span>.'
+            ], 'system');
+            return true;
+        }
+
+        openTarget = openTargets[target];
+
+        if (!openTarget || (openTarget.ownerOnly && !isOwnerShellUser())) {
+            appendTerminalResponse([
+                'Unknown open target. Try <span class="terminal-highlight">open github</span>, <span class="terminal-highlight">open linkedin</span>, or <span class="terminal-highlight">open cv</span>.'
+            ], 'system');
+            return true;
+        }
+
+        window.open(openTarget.url, '_blank', 'noopener');
+        appendTerminalResponse([
+            'Opening <span class="terminal-highlight">' + escapeHtml(openTarget.label) + '</span> in a new tab.'
+        ], 'system');
+        return true;
+    }
+
     function handleNavigationCommand(command) {
         var parts = command.split(' ');
-        var action = parts[0];
         var destination = parts.slice(1).join(' ');
 
         if (!destination) {
@@ -368,29 +704,23 @@
             return true;
         }
 
-        if (action === 'cd') {
-            if (destination === '..' || destination === '~' || destination === '/') {
-                destination = 'home';
-            } else if (destination.charAt(0) === '/') {
-                destination = destination.slice(1);
-            }
+        if (destination === '..' || destination === '~' || destination === '/') {
+            destination = 'home';
+        } else if (destination.charAt(0) === '/') {
+            destination = destination.slice(1);
         }
 
-        if (destination === 'cv' || destination === 'resume') {
-            if (action === 'open') {
-                window.open(cvUrl, '_blank', 'noopener');
-            }
-
-            appendTerminalResponse(terminalResponses.cv);
-            return true;
+        if (destination === 'top') {
+            destination = 'home';
         }
 
         if (sectionTargets[destination]) {
+            setCurrentDirectory(destination === 'top' ? 'home' : destination);
             appendTerminalResponse([
                 'Changed directory to <span class="terminal-highlight">' + escapeHtml(destination) + '</span>.'
             ], 'system');
 
-            if (destination === 'home' || destination === 'top') {
+            if (destination === 'home') {
                 returnTerminalHome();
                 return true;
             }
@@ -429,6 +759,16 @@
             return;
         }
 
+        if (resolvedCommand === 'ls') {
+            handleListCommand();
+            return;
+        }
+
+        if (resolvedCommand === 'pwd') {
+            handlePrintWorkingDirectoryCommand();
+            return;
+        }
+
         if (resolvedCommand === 'whoami') {
             appendTerminalResponse(getWhoAmIResponse());
             return;
@@ -439,7 +779,17 @@
             return;
         }
 
-        if (resolvedCommand === 'cd' || resolvedCommand.indexOf('cd ') === 0 || resolvedCommand.indexOf('open ') === 0) {
+        if (resolvedCommand === 'cat' || resolvedCommand.indexOf('cat ') === 0) {
+            handleCatCommand(resolvedCommand);
+            return;
+        }
+
+        if (resolvedCommand === 'open' || resolvedCommand.indexOf('open ') === 0) {
+            handleOpenCommand(resolvedCommand);
+            return;
+        }
+
+        if (resolvedCommand === 'cd' || resolvedCommand.indexOf('cd ') === 0) {
             if (!handleNavigationCommand(resolvedCommand)) {
                 appendTerminalResponse([
                     'Unknown destination. Try <span class="terminal-highlight">cd about</span> or <span class="terminal-highlight">cd contact</span>.'
@@ -560,6 +910,12 @@
     });
 
     $terminalInput.on('keydown', function(event) {
+        if (event.key === 'Tab') {
+            event.preventDefault();
+            applyTabCompletion();
+            return;
+        }
+
         if (!commandHistory.length) {
             return;
         }
