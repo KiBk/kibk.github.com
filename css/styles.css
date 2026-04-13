@@ -532,6 +532,49 @@ header {
     color: rgba(240, 246, 255, 0.66);
 }
 
+.terminal-toolbar-actions {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.terminal-toolbar-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 28px;
+    padding: 0 10px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    color: rgba(240, 246, 255, 0.8);
+    background: rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.terminal-toolbar-button:hover,
+.terminal-toolbar-button:focus {
+    color: #ffffff;
+    border-color: rgba(88, 210, 255, 0.38);
+    background: rgba(88, 210, 255, 0.12);
+}
+
+.terminal-toolbar-button-secondary {
+    color: rgba(240, 187, 116, 0.92);
+}
+
+.terminal-toolbar-button-secondary:hover,
+.terminal-toolbar-button-secondary:focus {
+    color: #ffffff;
+    border-color: rgba(240, 187, 116, 0.42);
+    background: rgba(240, 187, 116, 0.16);
+}
+
 .terminal-screen {
     display: flex;
     flex-direction: column;
@@ -627,6 +670,91 @@ header {
     color: rgba(240, 246, 255, 0.6);
     font-family: var(--mono);
     font-size: var(--terminal-caption-size);
+}
+
+.lead-terminal-column,
+.terminal-window,
+.terminal-screen,
+.terminal-output {
+    transition:
+        width 0.28s ease,
+        max-width 0.28s ease,
+        padding 0.28s ease,
+        max-height 0.28s ease,
+        box-shadow 0.28s ease,
+        opacity 0.24s ease;
+}
+
+body.terminal-docked {
+    padding-bottom: 126px;
+}
+
+body.terminal-docked .lead-terminal-column {
+    margin: 0;
+}
+
+body.terminal-docked .terminal-toolbar-actions {
+    display: flex;
+}
+
+body.terminal-docked .terminal-window {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 60;
+    width: 360px;
+    max-width: 360px;
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: var(--shadow-strong);
+}
+
+body.terminal-docked .terminal-toolbar {
+    padding: 14px 16px;
+}
+
+body.terminal-docked .terminal-screen {
+    min-height: auto;
+    gap: 14px;
+    padding: 16px 18px 18px;
+}
+
+body.terminal-docked .terminal-output {
+    max-height: 88px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(180deg, #000000 64%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000000 64%, transparent 100%);
+}
+
+body.terminal-docked .terminal-form,
+body.terminal-docked .terminal-caption {
+    display: none;
+}
+
+body.terminal-docked .terminal-window::after {
+    right: 18px;
+    bottom: 14px;
+    width: 84px;
+}
+
+body.terminal-docked.terminal-expanded .terminal-screen {
+    min-height: 304px;
+    gap: 18px;
+    padding: 20px 20px 18px;
+}
+
+body.terminal-docked.terminal-expanded .terminal-output {
+    max-height: 216px;
+    overflow-y: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+}
+
+body.terminal-docked.terminal-expanded .terminal-form {
+    display: flex;
+}
+
+body.terminal-docked.terminal-expanded .terminal-window::after {
+    width: 120px;
 }
 
 #lead-down {
@@ -1533,6 +1661,7 @@ footer .row {
     }
 
     header.active {
+        z-index: 80;
         transform: translateX(0);
     }
 
@@ -1632,6 +1761,19 @@ footer .row {
     .social ul {
         justify-content: center;
     }
+
+    body.terminal-docked {
+        padding-bottom: 104px;
+    }
+
+    body.terminal-docked .terminal-window,
+    body.terminal-docked.terminal-expanded .terminal-window {
+        right: 14px;
+        bottom: 14px;
+        left: 14px;
+        width: auto;
+        max-width: none;
+    }
 }
 
 @media only screen and (max-width: 720px) {
@@ -1689,6 +1831,37 @@ footer .row {
 
     .terminal-caption {
         display: none;
+    }
+
+    body.terminal-docked .terminal-toolbar {
+        padding: 12px 14px;
+    }
+
+    body.terminal-docked .terminal-toolbar-actions {
+        gap: 6px;
+    }
+
+    body.terminal-docked .terminal-toolbar-button {
+        min-height: 26px;
+        padding: 0 8px;
+        font-size: 0.68rem;
+    }
+
+    body.terminal-docked .terminal-screen {
+        padding: 14px 16px 16px;
+    }
+
+    body.terminal-docked .terminal-output {
+        max-height: 74px;
+    }
+
+    body.terminal-docked.terminal-expanded .terminal-screen {
+        min-height: 260px;
+        padding: 18px 16px 16px;
+    }
+
+    body.terminal-docked.terminal-expanded .terminal-output {
+        max-height: 176px;
     }
 
     .vtimeline-content {

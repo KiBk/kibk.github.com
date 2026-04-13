@@ -18,7 +18,7 @@
           rel="stylesheet">
     <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/styles.css?v=20260413d" rel="stylesheet">
 </head>
 
 <body>
@@ -76,26 +76,36 @@
                                 <span class="terminal-light terminal-light-amber"></span>
                                 <span class="terminal-light terminal-light-green"></span>
                             </div>
-                            <span class="terminal-title">portfolio-shell</span>
+                            <span class="terminal-title">kibk.net shell</span>
+                            <div class="terminal-toolbar-actions" aria-label="Terminal controls">
+                                <button class="terminal-toolbar-button" id="terminal-dock-toggle" type="button"
+                                        aria-label="Expand terminal">
+                                    Open
+                                </button>
+                                <button class="terminal-toolbar-button terminal-toolbar-button-secondary"
+                                        id="terminal-return-home" type="button" aria-label="Return terminal to intro">
+                                    Hero
+                                </button>
+                            </div>
                         </div>
                         <div class="terminal-screen">
                             <div class="terminal-output" id="terminal-output" aria-live="polite">
-                                <p class="terminal-line system">portfolio-shell ready.</p>
+                                <p class="terminal-line system">kibk.net shell ready.</p>
                                 <p class="terminal-line">
                                     Type <span class="terminal-highlight">help</span> to explore or
-                                    <span class="terminal-highlight">go projects</span> to jump.
+                                    <span class="terminal-highlight">cd projects</span> to jump.
                                 </p>
                             </div>
                             <form class="terminal-form" id="terminal-form" autocomplete="off">
-                                <label class="sr-only" for="terminal-input">Portfolio terminal command</label>
-                                <span class="terminal-prompt">kirill@portfolio:~$</span>
+                                <label class="sr-only" for="terminal-input">Site terminal command</label>
+                                <span class="terminal-prompt" id="terminal-prompt">user@kibk.net:~$</span>
                                 <input id="terminal-input" type="text" name="command"
                                        placeholder='Type "help"' spellcheck="false" autocomplete="off">
                             </form>
                         </div>
                     </div>
                     <p class="terminal-caption">
-                        Start with <code>help</code>. Try <code>go projects</code> or a hidden command if you are
+                        Start with <code>help</code>. Try <code>cd projects</code> or a hidden command if you are
                         curious.
                     </p>
                 </div>
@@ -645,7 +655,7 @@
     </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="js/scripts.min.js"></script>
+    <script src="js/scripts.min.js?v=20260413d"></script>
 </body>
 
 </html>
