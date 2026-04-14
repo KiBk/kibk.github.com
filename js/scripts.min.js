@@ -96,40 +96,8 @@
     var terminalResponses = {
         help: [
             'Commands:',
-            '<span class="terminal-highlight">about</span> <span class="terminal-highlight">experience</span> <span class="terminal-highlight">education</span> <span class="terminal-highlight">projects</span> <span class="terminal-highlight">skills</span> <span class="terminal-highlight">contact</span>',
-            '<span class="terminal-highlight">ls</span>, <span class="terminal-highlight">pwd</span>, <span class="terminal-highlight">cd &lt;section&gt;</span>, <span class="terminal-highlight">cat &lt;section&gt;</span>, and <span class="terminal-highlight">open github</span>/<span class="terminal-highlight">open linkedin</span>/<span class="terminal-highlight">open cv</span> extend the shell.',
-            '<span class="terminal-highlight">clear</span> resets the terminal. <span class="terminal-highlight">cv</span> still prints the resume link.'
-        ],
-        about: [
-            'Embedded and infrastructure engineer based in Trondheim.',
-            'Worked across RTL design, verification, DevOps, and developer enablement.',
-            'Now focused on AI-assisted engineering workflows for hardware design.'
-        ],
-        experience: [
-            'Arm: promoted to Staff Engineer in April 2026 after serving as Senior Engineer.',
-            'Current focus: using AI to make hardware design work simpler.',
-            'Nordic Semiconductor: moved from digital design and verification into DevOps and design enablement.',
-            'The through-line is developer productivity for hardware teams.'
-        ],
-        education: [
-            'MSc work focused on embedded computing systems, SystemC/TLM, and verification.',
-            'Academic projects covered FPGA, digital systems, cryptography, and architecture.',
-            'There is more detail in the education cards below.'
-        ],
-        projects: [
-            'Homelab: self-hosted infrastructure playground.',
-            'Attempt at soldering: custom keyboards built around nRF52 boards.',
-            'High-level verification environment: faster hybrid RTL/SystemC validation.',
-            'Scroll down for the full project cards and expandable details.'
-        ],
-        skills: [
-            'Core: C++, Python, Git, Shell, JavaScript.',
-            'Infra: Docker, Terraform, Ansible, Azure, CI/CD.',
-            'Hardware: FPGA, Verilog, SystemVerilog, VHDL, SVA, SystemC.'
-        ],
-        contact: [
-            'Use the contact form below for the easiest path.',
-            'You can also find me on <a href="https://github.com/kibk" target="_blank" rel="noopener noreferrer">GitHub</a> and <a href="https://linkedin.com/in/mrkirillbykov/" target="_blank" rel="noopener noreferrer">LinkedIn</a>.'
+            '<span class="terminal-highlight">ls</span>, <span class="terminal-highlight">pwd</span>, <span class="terminal-highlight">clear</span>, <span class="terminal-highlight">cd &lt;section&gt;</span>, <span class="terminal-highlight">cat &lt;section&gt;</span>, and <span class="terminal-highlight">open &lt;link&gt;/&lt;file&gt;</span> extend the shell.',
+            'Use <span class="terminal-highlight">ls</span> to see available sections, then <span class="terminal-highlight">cat about</span> to read or <span class="terminal-highlight">cd projects</span> to jump.'
         ],
         cv: [
             'Open the CV here: <a href="' + cvUrl + '" target="_blank" rel="noopener noreferrer">View CV</a>.'
@@ -241,12 +209,6 @@
             'cv',
             'whoami',
             'coffee',
-            'about',
-            'experience',
-            'education',
-            'projects',
-            'skills',
-            'contact',
             'su'
         ];
     }

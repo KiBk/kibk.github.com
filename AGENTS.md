@@ -5,3 +5,15 @@
 
 # Maintenance
 - If you change site content, layout, assets, or build pipeline (Sass/JS/Gulp), update the Project summary above to reflect the new state and keep the upstream reference accurate.
+
+# Safari Preview
+- For local browser review, serve the repo root with `python3 -m http.server 8000` and open `http://127.0.0.1:8000`.
+- On a fresh machine setup, enable Safari WebDriver once from a user terminal with `safaridriver --enable`. If macOS asks for elevation, run `sudo safaridriver --enable`.
+- If Safari automation is not available, open Safari and make sure remote automation is allowed in the Develop menu if that option is present on the system.
+- Starting `safaridriver` from the Codex sandbox may exit immediately even when Safari is configured correctly. Run `safaridriver -p 4444` outside the sandbox or with escalated permissions when using Codex tooling.
+- Confirm the driver is ready with `curl --max-time 3 -s http://127.0.0.1:4444/status`. A healthy response includes `"ready":true`.
+- Create a session with:
+  `curl --max-time 10 -s -X POST http://127.0.0.1:4444/session -H 'Content-Type: application/json' -d '{"capabilities":{"alwaysMatch":{"browserName":"safari"}}}'`
+- Once a session exists, drive the page with local `curl` calls to `/session/<id>/url`, `/window/rect`, and `/execute/sync`. In Codex, these localhost WebDriver calls may also need escalated permissions even though they are only talking to the local Safari driver.
+- Close the temporary browser session after verification with:
+  `curl --max-time 10 -s -X DELETE http://127.0.0.1:4444/session/<id>`
