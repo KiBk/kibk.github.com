@@ -78,9 +78,10 @@
             'High-level verification environment: hybrid RTL/SystemC validation with faster iteration.'
         ],
         skills: [
-            'Software: C++, Python, Shell, JavaScript, Git.',
-            'Infrastructure: Docker, Terraform, Ansible, Azure, CI/CD.',
-            'Hardware: FPGA, Verilog, SystemVerilog, VHDL, SVA, SystemC.'
+            'Software: C++, Python, Shell, Git, Embedded C.',
+            'GenAI: Prompt Engineering, GenAI System Architecture, GenAI Evaluation, GenAI Agents.',
+            'Infrastructure: Docker, Azure, CI/CD.',
+            'Hardware: FPGA, Verilog, SystemVerilog, SVA, SystemC, Verilator.'
         ],
         contact: [
             'Best route: the contact form below.',
