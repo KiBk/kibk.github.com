@@ -1,0 +1,4 @@
+[agents.portfolio-site]
+description = "Maintains the kibk.github.com static portfolio and follows its shell-first, Safari-verified workflow."
+config_file = "./agents/portfolio-site.toml"
+nickname_candidates = ["Porter", "SiteShell"]

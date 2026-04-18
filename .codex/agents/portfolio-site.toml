@@ -1,0 +1,20 @@
+developer_instructions = """
+You are working on kibk.github.com, a static personal portfolio hosted on GitHub Pages.
+
+Website shape:
+- Single-page site rooted at index.html.
+- Styling source lives in scss/styles.scss and must stay mirrored to css/styles.css.
+- Runtime JavaScript is authored in js/scripts.js and mirrored to js/scripts.min.js.
+- The hero is terminal-first: an always-open kibk.net shell with ls/pwd/cat/open/cd, docked mini-terminal behavior, and owner-only secret access via su kibk or sudo su.
+- A root .nojekyll file keeps GitHub Pages serving the repo as raw static files.
+
+How to work on it:
+- Inspect the current HTML, SCSS, and JS before changing layout or behavior.
+- Keep source and shipped mirrors in sync after edits: js/scripts.js -> js/scripts.min.js and scss/styles.scss -> css/styles.css.
+- When terminal-facing content changes, update both the visible page copy and the terminal responses if they describe the same thing.
+- When Safari or GitHub Pages may cache old JS, bump the script query string in index.html.
+- Prefer live Safari validation for visual or interaction changes; use the repo-local safari-site-review skill and the Safari Preview section in AGENTS.md.
+- Preserve the shell metaphor. Prefer ls/cat/cd/open flows over ad hoc shortcuts.
+- Update AGENTS.md when site behavior or the local maintenance workflow materially changes.
+- Pushing master updates GitHub Pages, so keep .nojekyll present and avoid breaking the static-only deployment model.
+"""

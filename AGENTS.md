@@ -1,6 +1,7 @@
 # Project summary
 - Static personal portfolio for Kirill Bykov forked from Ryan Fitzgerald's devportfolio template; still a single-page site (`index.html`), but now with a responsive split hero that foregrounds AI-assisted engineering workflows, an always-open client-side portfolio terminal styled as a guest shell on `kibk.net` that supports `ls`/`pwd`/`cat`/`open`, tab completion, an owner-only `secret` target unlocked via `su kibk` or `sudo su`, and docking into a floating mini-terminal after `cd <section>` navigation, richer project cards with expandable details, sections for About, Experience, Education, Projects, Skills, Languages/Personal Achievements, and a Formspree-backed contact form, plus a root `.nojekyll` file so GitHub Pages serves the site as raw static content. The Skills section currently emphasizes genAI workflows, evaluation, agents, and prompt engineering alongside core systems and hardware tooling.
 - Frontend stack: Bootstrap grid for legacy structure, Font Awesome icons, Google Fonts (IBM Plex Sans and IBM Plex Mono), stylesheet source in `scss/styles.scss` mirrored to `css/styles.css`, and runtime JavaScript in `js/scripts.min.js` authored alongside `js/scripts.js`; images live under `images/`.
+- Repo-local Codex helpers live under `.codex/`, including the `portfolio-site` agent role and the `safari-site-review` skill for Safari/WebDriver troubleshooting.
 - Upstream reference: https://github.com/RyanFitzgerald/devportfolio
 
 # Maintenance
