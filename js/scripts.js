@@ -240,7 +240,11 @@
         }
 
         if (command === 'su') {
-            return [defaultShellUser, 'kibk', 'root'];
+            return [defaultShellUser, 'kibk'];
+        }
+
+        if (command === 'sudo') {
+            return ['su'];
         }
 
         return [];
@@ -566,6 +570,14 @@
             return true;
         }
 
+        if (targetUser === 'root') {
+            appendTerminalResponse([
+                'Direct root login is disabled.',
+                'Use <span class="terminal-highlight">sudo su</span> instead.'
+            ], 'system');
+            return true;
+        }
+
         currentShellUser = targetUser;
         syncTerminalPrompt();
 
@@ -580,6 +592,23 @@
         appendTerminalResponse([
             'Identity switched to <span class="terminal-highlight">' + escapeHtml(currentShellUser) + '</span>.'
         ], 'system');
+        return true;
+    }
+
+    function handleSudoCommand(command) {
+        if (command === 'sudo su') {
+            currentShellUser = 'root';
+            syncTerminalPrompt();
+            appendTerminalResponse([
+                'Identity switched to <span class="terminal-highlight">root</span>.',
+                'Owner profile unlocked.'
+            ], 'secret');
+            return true;
+        }
+
+        appendTerminalResponse([
+            'Permission denied. This incident is going to be reported to the administrator.'
+        ], 'secret');
         return true;
     }
 
@@ -716,9 +745,7 @@
         }
 
         if (resolvedCommand === 'sudo' || resolvedCommand.indexOf('sudo ') === 0) {
-            appendTerminalResponse([
-                'Permission denied. This incident is going to be reported to the administrator.'
-            ], 'secret');
+            handleSudoCommand(resolvedCommand);
             return;
         }
 
