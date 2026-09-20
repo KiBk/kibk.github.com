@@ -17,7 +17,7 @@
     var linkedinUrl = 'https://linkedin.com/in/mrkirillbykov/';
     var secretUrl = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
     var shellHost = 'kibk.net';
-    var defaultShellUser = 'user';
+    var defaultShellUser = 'guest';
     var ownerShellUsers = {
         kibk: true,
         root: true
@@ -97,6 +97,8 @@
     var terminalResponses = {
         help: [
             'Commands:',
+            'Tab completes commands; ↑/↓ recalls history.',
+            'Ctrl+L clears the screen; Ctrl+C cancels input; Escape leaves the input.',
             '<span class="terminal-highlight">ls</span>, <span class="terminal-highlight">pwd</span>, <span class="terminal-highlight">clear</span>, <span class="terminal-highlight">cd &lt;section&gt;</span>, <span class="terminal-highlight">cat &lt;section&gt;</span>, and <span class="terminal-highlight">open &lt;link&gt;/&lt;file&gt;</span> extend the shell.',
             'Use <span class="terminal-highlight">ls</span> to see available sections, then <span class="terminal-highlight">cat about</span> to read or <span class="terminal-highlight">cd projects</span> to jump.'
         ],
@@ -125,12 +127,12 @@
     var $heroTerminal = $('#hero-terminal');
     var $terminalPrompt = $('#terminal-prompt');
     var $terminalOutput = $('#terminal-output');
+    var $terminalScreen = $heroTerminal.find('.terminal-screen');
     var $terminalForm = $('#terminal-form');
     var $terminalInput = $('#terminal-input');
     var $terminalCloseToggle = $('#terminal-close-toggle');
     var $terminalMinToggle = $('#terminal-min-toggle');
     var $terminalOpenToggle = $('#terminal-open-toggle');
-    var initialTerminalHtml = $terminalOutput.html();
     var commandHistory = [];
     var historyIndex = 0;
     var currentShellUser = defaultShellUser;
@@ -154,7 +156,8 @@
     }
 
     function getShellPromptText() {
-        return currentShellUser + '@' + shellHost + ':' + getShellPathText() + '$';
+        var directory = currentDirectory === 'home' ? '~' : currentDirectory;
+        return currentShellUser + '@' + shellHost + ' ' + directory + (currentShellUser === 'root' ? ' # ' : ' % ');
     }
 
     function getShellPromptMarkup() {
@@ -164,6 +167,7 @@
     function syncTerminalPrompt() {
         if ($terminalPrompt.length) {
             $terminalPrompt.text(getShellPromptText());
+            $('#terminal-window-title').text((currentDirectory === 'home' ? shellHost : currentDirectory) + ' — zsh');
         }
     }
 
@@ -419,7 +423,7 @@
             'class': 'terminal-line' + (type ? ' ' + type : ''),
             html: content
         }).appendTo($terminalOutput);
-        $terminalOutput.scrollTop($terminalOutput[0].scrollHeight);
+        $terminalScreen.scrollTop($terminalScreen[0].scrollHeight);
     }
 
     function appendTerminalResponse(lines, type) {
@@ -428,10 +432,10 @@
         });
     }
 
-    function resetTerminal() {
-        $terminalOutput.html(initialTerminalHtml);
+    function clearTerminal() {
+        $terminalOutput.empty();
         syncTerminalPrompt();
-        $terminalOutput.scrollTop($terminalOutput[0].scrollHeight);
+        $terminalScreen.scrollTop($terminalScreen[0].scrollHeight);
     }
 
     function normalizeCommand(command) {
@@ -740,7 +744,7 @@
         appendTerminalLine('command', getShellPromptMarkup() + ' ' + escapeHtml(rawCommand));
 
         if (resolvedCommand === 'clear') {
-            resetTerminal();
+            clearTerminal();
             return;
         }
 
@@ -799,40 +803,8 @@
         ], 'system');
     }
 
-    function buildTimeline() {
-        $('#experience-timeline').each(function() {
-            var $timeline = $(this);
-            var $userContent;
-
-            if ($timeline.find('.vtimeline-point').length) {
-                return;
-            }
-
-            $userContent = $timeline.children('div');
-
-            $userContent.each(function() {
-                $(this)
-                    .addClass('vtimeline-content')
-                    .wrap('<div class="vtimeline-point"><div class="vtimeline-block"></div></div>');
-            });
-
-            $timeline.find('.vtimeline-point').each(function() {
-                $(this).prepend('<div class="vtimeline-icon"><i class="fa fa-map-marker"></i></div>');
-            });
-
-            $timeline.find('.vtimeline-content').each(function() {
-                var date = $(this).data('date');
-
-                if (date) {
-                    $(this).parent().prepend('<span class="vtimeline-date">' + date + '</span>');
-                }
-            });
-        });
-    }
-
     $('#current-year').text(new Date().getFullYear());
     $html.removeClass('no-js');
-    buildTimeline();
     syncTerminalPrompt();
     syncTerminalDockControls();
     syncTerminalDockLayout();
@@ -897,9 +869,29 @@
         historyIndex = commandHistory.length;
         handleTerminalCommand(rawCommand);
         $terminalInput.val('');
+        $terminalScreen.scrollTop($terminalScreen[0].scrollHeight);
     });
 
     $terminalInput.on('keydown', function(event) {
+        if (event.key === 'Escape') {
+            $terminalInput.trigger('blur');
+            return;
+        }
+
+        if (event.ctrlKey && event.key.toLowerCase() === 'l') {
+            event.preventDefault();
+            clearTerminal();
+            return;
+        }
+
+        if (event.ctrlKey && event.key.toLowerCase() === 'c') {
+            event.preventDefault();
+            appendTerminalLine('command', getShellPromptMarkup() + escapeHtml($terminalInput.val()) + '^C');
+            $terminalInput.val('');
+            historyIndex = commandHistory.length;
+            return;
+        }
+
         if (event.key === 'Tab') {
             event.preventDefault();
             applyTabCompletion();
