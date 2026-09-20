@@ -14,11 +14,11 @@
     <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#5bbad5">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@300;400;500;600;700&amp;display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap"
           rel="stylesheet">
     <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/styles.css?v=20260413f" rel="stylesheet">
+    <link href="css/styles.css?v=20260919-apple2" rel="stylesheet">
 </head>
 
 <body>
@@ -59,7 +59,7 @@
             <div id="lead-overlay"></div>
             <div class="lead-shell">
                 <div class="lead-copy">
-                    <p class="lead-eyebrow">AI-Assisted Engineering Workflows | Embedded Systems | Infrastructure | Developer Tooling</p>
+                    <p class="lead-eyebrow">AI-assisted engineering &nbsp;·&nbsp; Embedded systems</p>
                     <h1>Kirill Bykov</h1>
                     <h2>Hardware / Software Engineer</h2>
                     <p class="lead-summary">
@@ -82,11 +82,11 @@
                                         id="terminal-open-toggle" type="button"
                                         aria-label="Open terminal"></button>
                             </div>
-                            <span class="terminal-title">kibk.net shell</span>
+                            <span class="terminal-title"><span class="terminal-title-icon" aria-hidden="true">⌂</span> <span id="terminal-window-title">kibk.net — zsh</span></span>
                         </div>
                         <div class="terminal-screen">
                             <div class="terminal-output" id="terminal-output" aria-live="polite">
-                                <p class="terminal-line system">kibk.net shell ready.</p>
+                                <p class="terminal-line system">Welcome to kibk.net.</p>
                                 <p class="terminal-line">
                                     Type <span class="terminal-highlight">help</span>, <span class="terminal-highlight">ls</span>, or
                                     <span class="terminal-highlight">cd projects</span> to jump.
@@ -94,9 +94,13 @@
                             </div>
                             <form class="terminal-form" id="terminal-form" autocomplete="off">
                                 <label class="sr-only" for="terminal-input">Site terminal command</label>
-                                <span class="terminal-prompt" id="terminal-prompt">user@kibk.net:~$</span>
-                                <input id="terminal-input" type="text" name="command"
-                                       placeholder='Type "help"' spellcheck="false" autocomplete="off">
+                                <span class="terminal-prompt" id="terminal-prompt">guest@kibk.net ~ %</span>
+                                <span class="terminal-input-wrap">
+                                    <input id="terminal-input" type="text" name="command"
+                                           placeholder=" " spellcheck="false" autocomplete="off"
+                                           autocapitalize="off" autocorrect="off" enterkeyhint="send">
+                                    <span class="terminal-cursor" aria-hidden="true"></span>
+                                </span>
                             </form>
                         </div>
                     </div>
@@ -141,154 +145,139 @@
         </section>
 
         <section id="experience" class="background-alt">
-            <div class="container">
+            <div class="container journey-section">
                 <h2 class="heading">Experience</h2>
-                <div id="experience-timeline">
-                    <div data-date="April 2024 - present">
-                        <div class="experience-company">
-                            <span class="experience-logo experience-logo-arm" aria-hidden="true">A</span>
-                            <div class="experience-company-copy">
-                                <h3><a href="https://arm.com/" class="deco-none">Arm</a></h3>
-                                <p class="experience-place">Trondheim</p>
+                <p class="journey-intro">From designing hardware to building the tools behind it.</p>
+                <div class="journey-list">
+                    <article class="journey-entry">
+                        <div class="journey-header">
+                            <h3><a href="https://arm.com/" class="deco-none">Arm</a></h3>
+                            <span class="journey-location">Trondheim, Norway</span>
+                        </div>
+                        <div class="journey-row">
+                            <p class="journey-period">Apr 2026 – present</p>
+                            <div class="journey-copy">
+                                <h4>Staff Engineer</h4>
+                                <p>Using AI to make hardware design work simpler.</p>
                             </div>
                         </div>
-                        <div class="experience-role-block">
-                            <h4>Staff Engineer from April 2026</h4>
-                            <p>
-                                Using AI to make hardware design work simpler.
-                            </p>
-                        </div>
-                        <div class="experience-role-block">
-                            <h4>Senior Engineer until April 2026</h4>
-                            <p>
-                                Using Generative AI to increase the efficiency of hardware design.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div data-date="November 2019 - March 2024">
-                        <div class="experience-company">
-                            <span class="experience-logo experience-logo-nordic" aria-hidden="true">N</span>
-                            <div class="experience-company-copy">
-                                <h3><a href="https://nordicsemi.com/" class="deco-none">Nordic Semiconductor</a></h3>
-                                <p class="experience-place">Trondheim</p>
+                        <div class="journey-row">
+                            <p class="journey-period">Apr 2024 – Apr 2026</p>
+                            <div class="journey-copy">
+                                <h4>Senior Engineer</h4>
+                                <p>Applied generative AI to help hardware teams work more efficiently.</p>
                             </div>
                         </div>
-                        <div class="experience-role-block">
-                            <h4>DevOps Engineer from 2022</h4>
-                            <p>
-                                Maintaining compute cluster, custom version control system, login servers, and CI/CD
-                                while working closely with IT on physical infrastructure needs.
-                            </p>
+                    </article>
+                    <article class="journey-entry">
+                        <div class="journey-header">
+                            <h3><a href="https://nordicsemi.com/" class="deco-none">Nordic Semiconductor</a></h3>
+                            <span class="journey-location">Trondheim, Norway</span>
                         </div>
-                        <div class="experience-role-block">
-                            <h4>R&amp;D Engineer until 2022</h4>
-                            <p>
-                                Digital design and verification of GPIO modules and their high-level integration while
-                                also maintaining CI/CD for the hardware development team.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div data-date="June 2018 - August 2018">
-                        <div class="experience-company">
-                            <span class="experience-logo experience-logo-arm" aria-hidden="true">A</span>
-                            <div class="experience-company-copy">
-                                <h3><a href="https://arm.com/" class="deco-none">Arm</a></h3>
-                                <p class="experience-place">Cambridge</p>
+                        <div class="journey-row">
+                            <p class="journey-period">2022 – Mar 2024</p>
+                            <div class="journey-copy">
+                                <h4>DevOps Engineer</h4>
+                                <p>Maintained the computing infrastructure, version control, and automated build and test systems used by the hardware team. Worked with IT on the physical infrastructure behind them.</p>
                             </div>
                         </div>
-                        <div class="experience-role-block">
-                            <h4>Summer Intern</h4>
-                            <p>
-                                Writing embedded C for MCUs and showcasing platform capabilities.
-                            </p>
-                            <p>
-                                Developing an automation-focused software package using Python, LaTeX, JavaScript, and
-                                HTML.
-                            </p>
+                        <div class="journey-row">
+                            <p class="journey-period">Nov 2019 – 2022</p>
+                            <div class="journey-copy">
+                                <h4>R&amp;D Engineer</h4>
+                                <p>Designed and verified digital input/output modules and integrated them into larger chip designs. Also maintained the team’s automated build and test systems.</p>
+                            </div>
                         </div>
-                    </div>
+                    </article>
+                    <article class="journey-entry">
+                        <div class="journey-header">
+                            <h3><a href="https://arm.com/" class="deco-none">Arm</a></h3>
+                            <span class="journey-location">Cambridge, UK</span>
+                        </div>
+                        <div class="journey-row">
+                            <p class="journey-period">Jun – Aug 2018</p>
+                            <div class="journey-copy">
+                                <h4>Summer Intern</h4>
+                                <p>Wrote embedded C for microcontrollers and demonstrated their capabilities. Built automation tools using Python, LaTeX, JavaScript, and HTML.</p>
+                            </div>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
 
         <section id="education">
-            <div class="container">
+            <div class="container journey-section">
                 <h2 class="heading">Education</h2>
-
-                <div class="education-block">
-                    <h3>Kaiserslautern Technical University (Germany)</h3>
-                    <span class="education-date">August 2018 - October 2019</span>
-                    <h4>Electronics and Computer Engineering</h4>
-                    <p>
-                        Amazing grades: <strong>1.0/1.0</strong>
-                    </p>
-                    <p>
-                        Studied architecture and verification of digital systems, SystemC, and digital prototyping.
-                    </p>
-                    <p>Projects:</p>
-                    <ul>
-                        <li>
-                            SW (Assembly) and HW (VHDL) codesign of a distributed system
-                        </li>
-                        <li>
-                            Test-driven development of a C++ library for ROBDD and state exploration with performance
-                            optimization
-                        </li>
-                    </ul>
-                    <p>
-                        MSc Thesis: A SystemC/TLM framework for characterising and validating the RTL implementation of
-                        a memory controller.
-                    </p>
-                </div>
-
-                <div class="education-block">
-                    <h3>
-                        University of Southampton (UK)
-                        <a href="https://www.topuniversities.com/universities/university-southampton"
-                           class="deco-none education-highlight">
-                            Top-100
-                        </a>
-                    </h3>
-                    <span class="education-date">September 2017 - June 2018</span>
-                    <h4>Electronics and Computer Science</h4>
-                    <p>
-                        Distinction grades: <strong>84%</strong>
-                    </p>
-                    <p>
-                        Secure Hardware Design, Digital IC and System Design, Digital System Design, Nanoelectronic
-                        Devices, Cryptography, Embedded Processors Design, and Digital System Synthesis.
-                    </p>
-                    <p>Projects:</p>
-                    <ul>
-                        <li>
-                            Digital SoC design using FPGA and digital signal processing in a karaoke system
-                        </li>
-                        <li>
-                            Designing an application-specific instruction set embedded processor (SystemVerilog) based
-                            on MIPS architecture
-                        </li>
-                        <li>
-                            Simulation, synthesis, and layout of a cryptographic system
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="education-block">
-                    <h3>Electrotechnical University (Russia)</h3>
-                    <span class="education-date">September 2013 - May 2017</span>
-                    <h4>BSc in Microelectronics and Solid State Electronics</h4>
-                    <p>
-                        Perfect grades: <strong>5.0/5.0</strong>
-                    </p>
-                    <p>
-                        The program covered the basics of nanoelectronics, its theory, and different fields of
-                        application, including microwave electronics and solid state electronics.
-                    </p>
-                    <p>
-                        BSc Thesis: Parameters and characteristics of a wireless MEMS passive vibro-accelerometer.
-                    </p>
+                <p class="journey-intro">A foundation in electronics, digital systems, and embedded computing.</p>
+                <div class="journey-list">
+                    <article class="journey-entry">
+                        <div class="journey-header">
+                            <h3>Kaiserslautern Technical University</h3>
+                            <span class="journey-location">Germany</span>
+                        </div>
+                        <div class="journey-row">
+                            <div class="journey-period"><p>Aug 2018 – Oct 2019</p><p class="journey-grade">Grade: 1.0</p></div>
+                            <div class="journey-copy">
+                                <h4>Electronics and Computer Engineering</h4>
+                                <p>Digital system architecture, verification, and prototyping.</p>
+                                <details class="journey-details">
+                                    <summary>Coursework &amp; thesis</summary>
+                                    <div class="journey-details-body">
+                                        <p>Studied SystemC and the architecture and verification of digital systems.</p>
+                                        <ul>
+                                            <li>Co-designed hardware (VHDL) and software (Assembly) for a distributed system.</li>
+                                            <li>Developed and optimized a C++ library for decision diagrams (ROBDD) and state exploration using test-driven development.</li>
+                                        </ul>
+                                        <p>Master’s thesis: a SystemC/TLM framework for characterising and validating a memory controller’s RTL implementation.</p>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="journey-entry">
+                        <div class="journey-header">
+                            <h3>University of Southampton</h3>
+                            <span class="journey-location">UK</span>
+                        </div>
+                        <div class="journey-row">
+                            <div class="journey-period"><p>Sep 2017 – Jun 2018</p><p class="journey-grade">Distinction · 84%</p></div>
+                            <div class="journey-copy">
+                                <h4>Electronics and Computer Science</h4>
+                                <p>Embedded processors, digital chip design, and hardware security.</p>
+                                <details class="journey-details">
+                                    <summary>Coursework &amp; projects</summary>
+                                    <div class="journey-details-body">
+                                        <p>Studied secure hardware design, digital IC and system design, nanoelectronic devices, cryptography, embedded processor design, and digital system synthesis.</p>
+                                        <ul>
+                                            <li>Built an FPGA-based karaoke system combining a digital system-on-chip and signal processing.</li>
+                                            <li>Designed an application-specific embedded processor in SystemVerilog, based on the MIPS architecture.</li>
+                                            <li>Simulated, synthesized, and laid out a cryptographic system.</li>
+                                        </ul>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="journey-entry">
+                        <div class="journey-header">
+                            <h3>Electrotechnical University</h3>
+                            <span class="journey-location">Russia</span>
+                        </div>
+                        <div class="journey-row">
+                            <div class="journey-period"><p>Sep 2013 – May 2017</p><p class="journey-grade">Grade: 5.0 / 5.0</p></div>
+                            <div class="journey-copy">
+                                <h4>BSc in Microelectronics and Solid State Electronics</h4>
+                                <p>Nanoelectronics, microwave electronics, and solid state electronics.</p>
+                                <details class="journey-details">
+                                    <summary>Thesis</summary>
+                                    <div class="journey-details-body">
+                                        <p>Bachelor’s thesis: parameters and characteristics of a wireless MEMS passive vibro-accelerometer.</p>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
@@ -648,7 +637,7 @@
     </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="js/scripts.min.js?v=20260418a"></script>
+    <script src="js/scripts.min.js?v=20260919-apple2"></script>
 </body>
 
 </html>
